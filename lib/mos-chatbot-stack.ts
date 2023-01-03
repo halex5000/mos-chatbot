@@ -23,14 +23,14 @@ export class MosChatbotStack extends cdk.Stack {
       compatibleRuntimes: [Runtime.PYTHON_3_9]
     })
 
-    const messageHandler = new PythonFunction(this, "mos-fancy-chatbot", {
+    const openAIAsker = new PythonFunction(this, "mos-fancy-chatbot", {
       memorySize,
       timeout,
       runtime,
       description:
         "used to handle questions incoming questions for the chatbot",
       handler: 'handler',
-      entry: './chatbot-function',
+      entry: './open-ai-asker-function',
       layers: [openAILayer]
     });
 
@@ -48,6 +48,6 @@ export class MosChatbotStack extends cdk.Stack {
       removalPolicy: RemovalPolicy.DESTROY,
     });
 
-    messageTable.grantReadWriteData(messageHandler);
+    messageTable.grantReadWriteData(openAIAsker);
   }
 }
